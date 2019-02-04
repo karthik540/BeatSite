@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="Stylesheet" href = "{{url_for('static' , filename = 'personalStyle.css')}}?q=128049780">
+    <title>BeatSite</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+
+    <div class = "img img1">
+        <div class = "imgtext">
+            <h3>Welcome to BeatSite</h3>
+            <h5>Enjoy music with us !</h5>
+        </div>        
+    </div>
+
+    <div class="section section-light">
+        <h1>We provide our Customers high quality music.</h1>
+        <div class = "card-holder">
+            <div class="card">
+                <img src="../static/Assets/img1.jpg" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <h4><b>BIGGER SONGLIST</b></h4> 
+                    <p>Listen to your favourite Artist and Albums all Day !.</p> 
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../static/Assets/img2.jpg" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <h4><b>VARIETY OF ARTIST</b></h4> 
+                    <p>Listen to your favourite Artist and Albums all Day !.</p> 
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../static/Assets/img2.jpg" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <h4><b>PLAYLIST FEATURE</b></h4> 
+                    <p>Listen to your favourite Artist and Albums all Day !.</p> 
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="../static/Assets/img1.jpg" alt="Avatar" style="width:100%">
+                <div class="container">
+                    <h4><b>WEB APPLICATION</b></h4> 
+                    <p>Listen to your favourite Artist and Albums all Day !.</p> 
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+    
+    {% include 'footer.html' %}
+
+</body>
+</html>
