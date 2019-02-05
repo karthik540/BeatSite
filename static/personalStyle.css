@@ -270,7 +270,10 @@ img {
         display: block;
         float: none;
         width: 90%;
-    }
+	}
+	.right-link a{
+		float: left;
+	}
 	.footer-distributed{
 		font: bold 14px sans-serif;
 	}
