@@ -1,5 +1,5 @@
 var botPart1 = '<div class="chat-container darker"><img src="../static/Assets/avatar.jpg" alt="Avatar" style="width:100%;"><p>';
-var userPart1 = '<div class="chat-container"><img src="../static/Assets/userImage.png" alt="Avatar" style="width:100%; class = "right"><p>'
+var userPart1 = '<div class="chat-container"><img src="../static/Assets/userImage.png" alt="Avatar" style="width:100%;" class = "right"><p>'
 var botPart3 ='</p></div>';
 function toggleLoginModal()
 {
@@ -29,6 +29,7 @@ function closeBotWindow()
 function sendMessage()
 {
     var utext = $("#msgBox").val();
+    var flag = false;
     $(".chat-parent-container").append(userPart1 + utext + botPart3);
     $.ajax({
         type: "POST",
@@ -37,8 +38,16 @@ function sendMessage()
         success: function (response) {
             console.log(botPart1 + response + botPart3);
             $(".chat-parent-container").append(botPart1 + response + botPart3);
+            flag = true;
+        },
+        error: function(){
+            $(".chat-parent-container").append(botPart1 + "Sorry, Technical Issues !" + botPart3);
+        },
+        complete: function(){
+            $("#msgBox").val('').empty();
         }
-    });
+    });        
+    
 }
 
 
