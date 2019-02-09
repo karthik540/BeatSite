@@ -29,7 +29,7 @@ body{
 }
 
 .top-nav a:hover{
-    color: #ffffff;
+    color: #e29839;
 }
 
 .top-nav .icon{
@@ -395,4 +395,145 @@ padding: 16px;
 	.modal-content{
 		width: 80%;
 	}
+}
+
+/*		Bot Style		*/
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+background-color: #555;
+color: white;
+padding: 16px 20px;
+border: none;
+cursor: pointer;
+opacity: 0.8;
+position: fixed;
+bottom: 23px;
+left: 80%;
+width: 280px;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+display: none;
+position: fixed;
+bottom: 1%;
+left: 78%;
+z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+max-width: 300px;
+padding: 10px;
+color: #e29939a9;
+border: 1px #000000;
+border-radius: 20px;
+background-color: #000000;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+width: 50%;
+padding: 15px;
+border: none;
+background: #181818;
+resize: none;
+color: #e29839;
+min-height: 50px;
+}
+
+.form-container .bottom{
+	display: inline-flex;
+}
+.bottom input{
+	height: 80px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+background-color:#181818;
+color: #e29839;
+outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+position: relative;
+background-color: #e29839;
+color: white;
+padding: 16px 20px;
+border: none;
+cursor: pointer;
+width: auto;
+margin-bottom:10px;
+opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+opacity: 1;
+}
+
+
+
+/* Chat containers  for the Bot chat Window*/
+.chat-parent-container{
+	height: 200px;
+	overflow:auto;
+}
+.chat-container {
+border: 2px solid #dedede;
+background-color: #f1f1f1;
+color: black;
+border-radius: 5px;
+padding: 0px;
+margin: 10px 0;
+}
+
+/* Darker chat container */
+.darker {
+border-color: #ccc;
+background-color: #ddd;
+}
+
+/* Clear floats */
+.chat-container::after {
+content: "";
+clear: both;
+display: table;
+}
+
+/* Style images */
+.chat-container img {
+float: left;
+max-width: 60px;
+width: 100%;
+margin-right: 20px;
+border-radius: 50%;
+min-height: 60px;
+}
+
+/* Style the right image */
+.chat-container img.right {
+float: right;
+margin-left: 20px;
+margin-right:0;
+}
+
+/* Style time text */
+.time-right {
+float: right;
+color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+float: left;
+color: #999;
 }

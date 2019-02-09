@@ -1,0 +1,29 @@
+<!--    Bot UI      -->
+
+<button class="open-button" onclick="openBotWindow()">Launch DEKU</button>
+
+<div class="chat-popup" id="botWindow">
+  <form class="form-container">
+    
+    <span class="close" onclick="closeBotWindow()">&times;</span>
+    <h1>Deku</h1>
+
+    <label for="msg"><b>Message</b></label>
+    <div class = "chat-parent-container">
+        <!-- One chat
+        <div class="chat-container darker">
+            <img src="../static/Assets/avatar.jpg" alt="Avatar" style="width:100%;">
+            <p>Hey! I'm fine. Thanks for asking!</p>
+        </div> -->
+        <!-- Chat Ends-->
+        
+    </div>   
+
+    <br>
+    <div class = "bottom">
+        <textarea placeholder="Type message.." id="msgBox" required></textarea>
+        <input type="button" class="btn" value="Send" onclick="sendMessage();">
+    </div>
+    
+  </form>
+</div>
