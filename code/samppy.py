@@ -1,6 +1,6 @@
 import urllib.request
 from urllib.parse import quote_plus
-impormy t json
+import json
 s = quote_plus(str(input("Enter artist name : ")))
 y  = quote_plus(str(input("Enter song name : ")))
 with urllib.request.urlopen("http://api.musixmatch.com/ws/1.1/track.search?q_artist="+s+"&page_size=3&page=1&s_track_rating=desc&q_track="+y+"&apikey=d9f9da53de4a90b828fcf767cbfccffe") as url:
