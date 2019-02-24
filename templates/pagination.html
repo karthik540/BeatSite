@@ -1,0 +1,24 @@
+<div class="pagination">  
+    {% set page_no = data['page_no'] %}
+
+    <a href="/browse/{{ page_no - 1 }}">&laquo;</a>
+
+    {% set start_no = 1 %}
+
+    {% if page_no > 6 %}
+        {% set start_no = page_no % 6 %}
+        {% set start_no = start_no - 1 %}
+        {% set start_no = page_no - start_no %}
+    {% endif %}
+
+    {% for i in range(6) %}
+        {% if start_no + i ==  page_no  %}
+            <a class="active" href="/browse/{{ start_no + i}}">{{ start_no + i }}</a>
+        {% else %}
+            <a href="/browse/{{ start_no + i }}">{{ start_no + i}}</a>
+        {% endif %}
+        {% set i = i + 1 %}
+    {% endfor %}
+
+    <a href="/browse/{{ page_no + 1 }}">&raquo;</a>
+</div>
