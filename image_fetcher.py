@@ -8,8 +8,7 @@ def fetch_url(artistname , albumname):
     source_code = requests.get(baseUrl + queryText)
     source_text = source_code.text
     soup = BeautifulSoup(source_text , features="html5lib")
-    tag = soup.findAll('img' , limit= 1)
-    img_url = tag[0]['src']
-    return img_url
+    tag = soup.findAll("a")
+    print(tag)
 
-    
+fetch_url('A Star Is Born Soundtrack' , 'Lady Gaga feat. Bradley Cooper')
