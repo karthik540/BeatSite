@@ -22,6 +22,7 @@ x = j_obj['message']['body']['track_list'][0]['track']['primary_genres']['music_
 genrelist = []
 genrelist.append(x)
 l = genrelist
+sd = "hello world"
 
 def getvideo():
     l = quote_plus(str(input("Enter the song name :")))
