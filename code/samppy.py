@@ -22,12 +22,24 @@ x = j_obj['message']['body']['track_list'][0]['track']['primary_genres']['music_
 genrelist = []
 genrelist.append(x)
 l = genrelist
-import csv
 
+def getvideo():
+    l = quote_plus(str(input("Enter the song name :")))
+    with urllib.request.urlopen("https://www.googleapis.com/youtube/v3/search?part=id&q="+l+"&type=video&key=AIzaSyBtN6nKC7Jaai3hIWlumCQgrtkBZcmWq4U") as url:
+        p = url.read()
+        j_objs = json.loads(p)
+        link = j_objs['items'][0]['id']['videoId']
+        print (link)
+        import webbrowser
+        webbrowser.open('https://www.youtube.com/watch?v='+link+'?autoplay=1', new=2)
+
+getvideo()
+
+import csv
 out = open('abl.csv', 'a')
 for row in l:
     for column in row:
         out.write('%s' % column)
     out.write('\n')
-out.close()
+out.close() 
 print('File transfer is done from list to csv')
