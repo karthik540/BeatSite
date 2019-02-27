@@ -12,7 +12,7 @@ def index():
 @app.route('/browse/<int:page_no>')
 def browse(page_no = 1):
     album_list = []
-    page_limit = 16                  #Page Limit Setting Variable
+    page_limit = 4                  #Page Limit Setting Variable
     
     url_request = 'http://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=3d136bab70652b62413441c2a2880831&chart_name=top&page=' + str(page_no) + '&page_size=' + str(page_limit) + '&country=us&f_has_lyrics=1'
     r = requests.get(url_request)
