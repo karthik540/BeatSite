@@ -354,7 +354,7 @@ img {
 
 /*	Form Style Modal	*/
 /* Full-width input fields */
-input[type=text], input[type=password] {
+input[type=text], input[type=password] , input[type=email] {
 width: 100%;
 padding: 15px;
 margin: 5px 0 22px 0;
@@ -610,3 +610,46 @@ overflow: hidden;
 .stars-80:after { width: 80%; }
 .stars-90:after { width: 90%; }
 .stars-100:after { width: 100; }
+
+/*		Snack Bar Style		*/
+#snackbar {
+	visibility: hidden;
+	min-width: 250px;
+	margin-left: -125px;
+	background-color:rgb(55, 131, 54);
+	color: rgb(163, 91, 101);
+	text-align: center;
+	border-radius: 2px;
+	padding: 16px;
+	position: fixed;
+	z-index: 1;
+	left: 50%;
+	top: 7.5%;
+	font-size: 17px;
+}
+
+#snackbar.show {
+	visibility: visible;
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+	from {top: 0; opacity: 0;} 
+	to {top: 7.5%; opacity: 1;}
+}
+
+@keyframes fadein {
+	from {top: 0; opacity: 0;}
+	to {top: 7.5%; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+	from {top: 7.5%; opacity: 1;} 
+	to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+	from {top: 7.5%; opacity: 1;}
+	to {top: 0; opacity: 0;}
+}

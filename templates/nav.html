@@ -19,21 +19,21 @@
 <div id="SignUpModal" class="modal">
 
     <!-- Modal content -->
-    <form class="modal-content">
+    <form class="modal-content" id = "SignupForm">
     <span class="close">&times;</span>
     <div class="container">
         <h1>Sign Up</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <input type="email" placeholder="Enter Email" name="email" required>
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="name" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="password" required>
 
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-        
         <label>
         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
         </label>
@@ -41,7 +41,7 @@
         
 
         <div class="clearfix">
-        <button type="submit" class="signupbtn">Sign Up</button>
+        <button type="button" class="signupbtn" onclick="signup()">Sign Up</button>
         </div>
     </div>
     </form>
@@ -51,7 +51,7 @@
 <div id="LoginModal" class="modal">
 
     <!-- Modal content -->
-    <form class="modal-content">
+    <form class="modal-content" id = "LoginForm">
     <span class="close">&times;</span>
     <div class="container">
         <h1>Log In</h1>
@@ -61,13 +61,15 @@
         <input type="text" placeholder="Enter Email" name="email" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" placeholder="Enter Password" name="password" required>
         
         <div class="g-recaptcha" data-sitekey="6Ldbdg0TAAAAAI7KAf72Q6uagbWzWecTeBWmrCpJ" style = "margin-top: 5%;"></div>   
 
         <div class="clearfix">
-        <button type="submit" class="signupbtn" style = "margin-top: 2%;">Log In</button>
+        <button type="button" class="signupbtn" style = "margin-top: 2%;" onclick="login()">Log In</button>
         </div>
     </div>
     </form>
 </div>
+
+<div id="snackbar"></div>

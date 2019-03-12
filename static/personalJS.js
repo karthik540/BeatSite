@@ -17,6 +17,7 @@ function toggleLoginModal()
 function openBotWindow()
 {    
     $("#botWindow").css("display", "block");
+    snackbar("Launching Bot Deku !")
     console.log("works !")
 }
 
@@ -50,7 +51,80 @@ function sendMessage()
     
 }
 
+/*      Snack bar function      */
+function snackbar(message , color = "green") {
 
+    var green_background = "rgb(139, 182, 121)";
+    var red_background = "rgb(163, 91, 101)";
+
+    var red_text = "rgb(122, 34, 47)"
+    var green_text = "rgb(55, 131, 54)"
+
+    if(color == "green")
+    {
+        $("#snackbar").css("background-color", green_background);
+        $("#snackbar").css("color", green_text);
+    }
+    else
+    {
+        $("#snackbar").css("background-color", red_background);
+        $("#snackbar").css("color", red_text);
+    }
+
+
+    $("#snackbar").text(message);    
+    $("#snackbar").addClass("show");
+    
+    setTimeout(function name(params) {
+        $("#snackbar").removeClass("show");
+    }, 3000);
+}
+/* Snackbar end */
+
+/*      Login function       */
+function login()
+{
+    $.ajax({
+        type: "POST",
+        url: "/login",
+        data: $("#LoginForm").serialize(),
+        success: function (response) {
+            console.log(response);
+            CloseModal();
+            snackbar("Login Successfull !" , "green");
+        },
+        error: function () {
+            snackbar("Login Failed !" , "red");
+        }
+    });
+}
+
+/*      Signup Function      */
+function signup()
+{
+    $.ajax({
+        type: "POST",
+        url: "/signup",
+        data: $("#SignupForm").serialize(),
+        success: function (response) {
+            console.log(response);
+            CloseModal();
+            snackbar("Signup Successfull !" , "green");
+            //editPage(response);
+        },
+        error: function () {
+            snackbar("Signup Failed !" , "red");
+        }
+    });
+}
+
+/*      Modal Close      */
+function CloseModal() {
+    $(".modal").css("display", "none");
+}
+
+
+/*      Document Ready Functions     */
 $(document).ready(function () {
 
 //Responsive navbar...
@@ -90,7 +164,7 @@ $("#loginButton").click(function (e) {
 });
 
 $(".close").click(function (e) {
-    $(".modal").css("display", "none");
+    CloseModal();
     e.preventDefault();
 });
 
