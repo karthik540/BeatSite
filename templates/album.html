@@ -28,6 +28,8 @@
             <h3>Album: {{ data['album_info']['album_name'] }}</h3>
             <h5>Artist: {{ data['album_info']['artist_name'] }}</h5>
             <h5>Genre: {{ data['album_info']['genre'] }}</h5>
+            
+            
         </div>
         <center>
         
@@ -39,9 +41,9 @@
             </tr>
             
             {% for track in data['track_list'] %}
-                <tr>
+                <tr class = "list_track">
                     <td>{{ track['index'] }}</td>
-                    <td>{{ track['track_name']}}</td>
+                    <td value = "this.value">{{ track['track_name']}}</td>
                     <td>
                         <div><span class="stars-container stars-100">★★★★★</span> ({{ track['track_rating'] }})</div>
                     </td>

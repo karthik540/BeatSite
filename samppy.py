@@ -23,7 +23,6 @@ def getvideo(songname):
         j_objs = json.loads(p)
         link = j_objs['items'][0]['id']['videoId']
     return link
-print(getvideo("Halena"))
 """get()
 x = j_obj['message']['body']['track_list'][0]['track']['primary_genres']['music_genre_list'][0]['music_genre']['music_genre_name']
 genrelist = []

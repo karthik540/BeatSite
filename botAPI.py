@@ -5,7 +5,6 @@ from urllib.parse import quote_plus
 
 CLIENT_ACCESS_TOKEN = '3a79f257e43e497b9d07d18c51e7497d'
 
-
 def botResponseReciever(queryMessage):
     ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
 

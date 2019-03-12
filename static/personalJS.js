@@ -1,6 +1,9 @@
 var botPart1 = '<div class="chat-container darker"><img src="../static/Assets/avatar.jpg" alt="Avatar" style="width:100%;"><p>';
 var userPart1 = '<div class="chat-container"><img src="../static/Assets/userImage.png" alt="Avatar" style="width:100%;" class = "right"><p>'
 var botPart3 ='</p></div>';
+
+var isLoggedIn = false;
+
 function toggleLoginModal()
 {
     if($(".modal").css("display") == "none")
@@ -81,6 +84,8 @@ function snackbar(message , color = "green") {
 }
 /* Snackbar end */
 
+
+
 /*      Login function       */
 function login()
 {
@@ -91,7 +96,13 @@ function login()
         success: function (response) {
             console.log(response);
             CloseModal();
-            snackbar("Login Successfull !" , "green");
+            if(response['flag'] == 1)
+            {
+                snackbar("Login Successfull !" , "green");
+                loggedIn(response);
+            }
+            else    
+                snackbar("Login Failed !" , "red");            
         },
         error: function () {
             snackbar("Login Failed !" , "red");
@@ -110,7 +121,7 @@ function signup()
             console.log(response);
             CloseModal();
             snackbar("Signup Successfull !" , "green");
-            //editPage(response);
+            loggedIn(response);
         },
         error: function () {
             snackbar("Signup Failed !" , "red");
@@ -122,6 +133,9 @@ function signup()
 function CloseModal() {
     $(".modal").css("display", "none");
 }
+
+
+
 
 
 /*      Document Ready Functions     */
@@ -167,8 +181,5 @@ $(".close").click(function (e) {
     CloseModal();
     e.preventDefault();
 });
-
-
-
 
 });
