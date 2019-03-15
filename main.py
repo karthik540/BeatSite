@@ -1,9 +1,11 @@
 from flask import Flask , render_template , request , jsonify
 from botAPI import *
-from test import *
+from samppy import *
 from image_url_fetcher import *
 import json , requests, pprint
 import pymysql
+import urllib.request
+from urllib.parse import quote_plus
 import random
 
 import urllib.request
@@ -79,10 +81,14 @@ def browse(page_no = 1):
     pprint.pprint(album_list)
     return render_template('browse.html' , data = {'album_list' : album_list , 'page_no' : page_no})
 
-@app.route('/videoId/<song_name>' , methods = ['POST'])
-def videoId(song_name):
-    video_id = getID(song_name)
-    video_id.replace("watch?v=" , "embed/")
+@app.route('/videoId/<songname>' , methods = ['POST'])
+def videoId(songname):
+    print(songname)
+    l = "https://www.googleapis.com/youtube/v3/search?part=id&q="+ str(songname) +"&type=video&key=AIzaSyBtN6nKC7Jaai3hIWlumCQgrtkBZcmWq4U"
+    p = requests.get(l)
+    j_objs = json.loads(p.text)
+    pprint.pprint(j_objs)
+    video_id = j_objs['items'][0]['id']['videoId']
     return video_id
 
 @app.route('/album/<int:album_id>')
@@ -94,12 +100,27 @@ def album(album_id):
 
     counter = 1
     for track in json_data['message']['body']['track_list']:
+        songname = track['track']['track_name']
+        """
+        Youtube video Fetcher
+
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/GWH_k6S7YQU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        l = "https://www.googleapis.com/youtube/v3/search?part=id&q="+ str(songname) +"&type=video&key=AIzaSyBtN6nKC7Jaai3hIWlumCQgrtkBZcmWq4U"
+        p = requests.get(l)
+        j_objs = json.loads(p.text)
+        pprint.pprint(j_objs)
+        video_id = j_objs['items'][0]['id']['videoId']
+        print(video_id)
+
+        """
 
         single_track = {
             'index' : counter ,
             'track_id' : track['track']['track_id'],
             'track_name' : track['track']['track_name'], 
             'track_rating' : track['track']['track_rating'],
+            #'video_id' : video_id
         }
         track_list.append(single_track)
         counter = counter + 1
@@ -116,7 +137,7 @@ def album(album_id):
             'genre' : genre
         }
         break
-    pprint.pprint(json_data['message']['body']['track_list'])
+    #pprint.pprint(json_data['message']['body']['track_list'])
     return render_template('album.html' , data = {'album_info': album_info , 'track_list' : track_list})
 
 @app.route('/botresponse' , methods = ['POST'])

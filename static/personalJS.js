@@ -134,6 +134,22 @@ function CloseModal() {
     $(".modal").css("display", "none");
 }
 
+/*      Youtube video Fetcher       */
+
+function getVideoID(songname){
+    console.log(songname);
+
+    $.ajax({
+        type: "POST",
+        url: "/videoId/" + songname,
+        success: function (response) {
+            console.log(response);
+            $("#video_container").css("padding", "3% 25%");
+            $("#video_container").html("<iframe width='800' height='400' src='https://www.youtube.com/embed/" + response + "' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
+        }
+    });
+}
+
 
 
 
