@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <iframe id="video" width="800" height="400" src="https://www.youtube.com/embed/5X7WWVTrBvM?autoplay=1&mute=1&enablejsapi=1&html5=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+        <!--<button id="temp" class="tempc" onclick="document.getElementById('info').innerHTML = 'yes'; play();">Click</button>-->
+        <button id="play-button">Play</button>
+        <button id="pause-button">Pause</button>
+    </body>
+    <script>
+        var player;
+        function onYouTubePlayerAPIReady() {
+        // global player
+        player = new YT.Player(document.querySelector('iframe'), {
+            events: {
+            // call function when player is ready to use
+            'onReady': onPlayerReady
+            }
+        });
+        }
+
+        function onPlayerReady(event) {
+            var playButton = document.getElementById("play-button");
+            playButton.addEventListener("click", function() {
+                player.playVideo();
+            });
+            
+            var pauseButton = document.getElementById("pause-button");
+            pauseButton.addEventListener("click", function() {
+                player.pauseVideo();
+            });
+        }
+
+        // Inject YouTube API script
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    </script>
+</html>
