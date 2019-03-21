@@ -43,6 +43,7 @@ function sendMessage()
         success: function (response) {
             //console.log(botPart1 + response[1] + botPart3);
             $(".chat-parent-container").append(botPart1 + response['response'] + botPart3);
+            $(".chat-parent-container").animate({ scrollTop: 20000000 }, "slow");
             flag = true;
             bot_Event_Handler(utext , response['class']);
         },
@@ -81,6 +82,11 @@ function bot_Event_Handler(user_request , intent_class) {
 
     if(intent_class == "decrease volume")
         decreaseVolume();  
+    
+    if(intent_class == "go forward")
+        skipForward();
+    if(intent_class == "go backward")
+        skipBackward();   
     
 }
 
@@ -228,6 +234,19 @@ function increaseVolume() {
 function decreaseVolume() {
     player.setVolume(player.getVolume() - 10);
 }
+
+function skipForward() {
+    pauseVideo();
+    player.seekTo(player.getCurrentTime() + 10 , true);
+    playVideo();
+}
+
+function skipBackward() {
+    pauseVideo();
+    player.seekTo(player.getCurrentTime() - 10 , true);
+    playVideo();
+}
+
 
 
 /*      Document Ready Functions     */

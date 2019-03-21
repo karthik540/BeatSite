@@ -23,8 +23,10 @@ def botResponseReciever(queryMessage):
 
     data = json.loads(jsonData)
     #pprint.pprint(data)
+
     send_data = (
         data['result']['fulfillment']['speech'],
         data['result']['metadata']['intentName']
     )
+    
     return send_data

@@ -8,6 +8,10 @@ import urllib.request
 from urllib.parse import quote_plus
 import random
 
+"""from win32com.client import Dispatch
+
+speak = Dispatch("SAPI.SpVoice")"""
+
 import urllib.request
 from urllib.parse import quote_plus
 
@@ -145,6 +149,7 @@ def botResponse():
     #print(request.form["utext"])
     botMessage = botResponseReciever(request.form["utext"])
     #print(botMessage)
+    #speak.Speak("Hello")
     return  jsonify({'response': botMessage[0] , 'class' : botMessage[1]})
 
 if __name__ == '__main__':
