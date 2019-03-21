@@ -10,7 +10,7 @@
         var player;
         function onYouTubePlayerAPIReady() {
         // global player
-        player = new YT.Player(document.querySelector('iframe'), {
+        player = new YT.Player('video', {
             events: {
             // call function when player is ready to use
             'onReady': onPlayerReady
@@ -35,5 +35,6 @@
         tag.src = "https://www.youtube.com/player_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
     </script>
 </html>

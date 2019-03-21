@@ -10,10 +10,19 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <link rel="Stylesheet" href = "{{url_for('static' , filename = 'personalStyle.css')}}?q=128049780">
     <title>BeatSite</title>
+    <script>
+        // Inject YouTube API script
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        console.log("success !");
+    </script>
 </head>
 <body>
-    {% include 'nav.html' %}
     
+    {% include 'nav.html' %}
+        
     <div id = "video_container"style="background-color:#292C2F; padding:10% 37%;">
         <center>                
             <i class="fa fa-refresh fa-spin" style="font-size:80px; color: #E29839"></i>
@@ -54,7 +63,7 @@
         </center>
 
     </div>
-
+    {% include 'bot.html' %}
     {% include 'footer.html' %}
 </body>
 </html>

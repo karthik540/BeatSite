@@ -1,4 +1,4 @@
-from flask import Flask , render_template , request , jsonify
+from flask import Flask , render_template , request , jsonify , sessions
 from botAPI import *
 from samppy import *
 from image_url_fetcher import *
@@ -63,7 +63,7 @@ def login():
 @app.route('/browse/<int:page_no>')
 def browse(page_no = 1):
     album_list = []
-    page_limit = 16                  #Page Limit Setting Variable
+    page_limit = 4                  #Page Limit Setting Variable
     
     url_request = 'http://api.musixmatch.com/ws/1.1/chart.tracks.get?apikey=3d136bab70652b62413441c2a2880831&chart_name=top&page=' + str(page_no) + '&page_size=' + str(page_limit) + '&country=in&f_has_lyrics=1'
     r = requests.get(url_request)
@@ -142,10 +142,10 @@ def album(album_id):
 
 @app.route('/botresponse' , methods = ['POST'])
 def botResponse():
-    print(request.form["utext"])
+    #print(request.form["utext"])
     botMessage = botResponseReciever(request.form["utext"])
-    
-    return  botMessage
+    #print(botMessage)
+    return  jsonify({'response': botMessage[0] , 'class' : botMessage[1]})
 
 if __name__ == '__main__':
     app.run(debug= True)

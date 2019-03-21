@@ -2,6 +2,7 @@ var botPart1 = '<div class="chat-container darker"><img src="../static/Assets/av
 var userPart1 = '<div class="chat-container"><img src="../static/Assets/userImage.png" alt="Avatar" style="width:100%;" class = "right"><p>'
 var botPart3 ='</p></div>';
 
+var player;
 var isLoggedIn = false;
 
 function toggleLoginModal()
@@ -40,9 +41,10 @@ function sendMessage()
         url: "/botresponse",
         data: {'utext' : utext},
         success: function (response) {
-            console.log(botPart1 + response + botPart3);
-            $(".chat-parent-container").append(botPart1 + response + botPart3);
+            //console.log(botPart1 + response[1] + botPart3);
+            $(".chat-parent-container").append(botPart1 + response['response'] + botPart3);
             flag = true;
+            bot_Event_Handler(utext , response['class']);
         },
         error: function(){
             $(".chat-parent-container").append(botPart1 + "Sorry, Technical Issues !" + botPart3);
@@ -51,6 +53,34 @@ function sendMessage()
             $("#msgBox").val('').empty();
         }
     });        
+    
+}
+
+/*      Bot Event handler function      */
+
+function bot_Event_Handler(user_request , intent_class) {
+    
+    if(intent_class == "Browse")
+        window.location="http://127.0.0.1:5000/browse/";
+
+    //console.log(bot_response);
+    if(intent_class == "pause song")
+        pauseVideo();
+    
+    if(intent_class == "start song")
+        playVideo();
+
+    if(intent_class == "mute song")
+        muteVideo();
+    
+    if(intent_class == "unmute song")
+        unmuteVideo();
+    
+    if(intent_class == "increase volume")
+        increaseVolume();
+
+    if(intent_class == "decrease volume")
+        decreaseVolume();  
     
 }
 
@@ -84,7 +114,14 @@ function snackbar(message , color = "green") {
 }
 /* Snackbar end */
 
-
+function loggedIn(user_data)
+{   
+    $("#editButton").show();
+    $("#editButton").html("<i class='fa fa-fw fa-user editButton'></i>" + user_data['name']);
+    //$("#editButton").text( "<i class='fa fa-fw fa-user editButton'></i>" + user_data['name']);
+    $("#loginButton").hide();
+    $("#signUpButton").hide();
+}
 
 /*      Login function       */
 function login()
@@ -145,18 +182,68 @@ function getVideoID(songname){
         success: function (response) {
             console.log(response);
             $("#video_container").css("padding", "3% 25%");
-            $("#video_container").html("<iframe width='800' height='400' src='https://www.youtube.com/embed/" + response + "' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
+            $("#video_container").html("<iframe id='player' width='100%' height='400px' src='https://www.youtube.com/embed/" + response + "?autoplay=1&enablejsapi=1&html5=1' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen=''></iframe>");
+            onYouTubePlayerAPIReady();
         }
     });
 }
 
+/*      Youtube Video Controller    */
+
+var player;
+function onYouTubePlayerAPIReady() {
+    // global player
+    
+    //console.log("object created!");
+    player = new YT.Player('player', {
+        events: {
+        
+        }
+});
+}
 
 
+function playVideo(){
+    player.playVideo();
+}
+
+function pauseVideo(){
+    player.pauseVideo();
+}
+
+function muteVideo() {
+    player.mute();
+}
+
+function unmuteVideo() {
+    player.unmute();
+}
+
+function increaseVolume() {
+    if(player.isMuted())
+        unmuteVideo();
+    player.setVolume(player.getVolume() + 10);
+}
+
+function decreaseVolume() {
+    player.setVolume(player.getVolume() - 10);
+}
 
 
 /*      Document Ready Functions     */
 $(document).ready(function () {
+/*
+// global player
+function onYouTubePlayerAPIReady() {
+    player = new YT.Player(document.querySelector('iframe'), {});
+}
 
+// Inject YouTube API script
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+*/
 //Responsive navbar...
 
 $(".icon").click(function (e) {

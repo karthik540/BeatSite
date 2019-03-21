@@ -1,6 +1,7 @@
 import json
 import apiai
 import urllib.request
+import pprint
 from urllib.parse import quote_plus
 
 CLIENT_ACCESS_TOKEN = '3a79f257e43e497b9d07d18c51e7497d'
@@ -20,10 +21,10 @@ def botResponseReciever(queryMessage):
     rawData = rawData.replace(r"\'" , "")   #Remove \' which causes prob in the bot message
     jsonData = rawData[0:-1]                        #Remove ' in the end
 
-    jsonObj = open("response.json" , "w+")
-    jsonObj.write(jsonData)
-    jsonObj.close()
-
-    with open('response.json') as f:
-        data = json.load(f)
-    return data['result']['fulfillment']['speech'] + "\n"
+    data = json.loads(jsonData)
+    #pprint.pprint(data)
+    send_data = (
+        data['result']['fulfillment']['speech'],
+        data['result']['metadata']['intentName']
+    )
+    return send_data

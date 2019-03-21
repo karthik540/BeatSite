@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{url_for('static' , filename = 'personalJS.js')}}"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <link rel="Stylesheet" href = "{{url_for('static' , filename = 'personalStyle.css')}}?q=128049780">
+    <link rel="Stylesheet" href = "{{url_for('static' , filename = 'personalStyle.css')}}">
     <title>BeatSite</title>
 </head>
 <body>
@@ -27,6 +27,7 @@
             </a>     
     {% endfor %}
     </div>    
+    {% include 'bot.html' %}
     {% include 'pagination.html' %}
     {% include 'footer.html' %}
 </body>
