@@ -5,6 +5,7 @@ var botPart3 ='</p></div>';
 var player;
 var isLoggedIn = false;
 
+/*
 function toggleLoginModal()
 {
     if($(".modal").css("display") == "none")
@@ -16,6 +17,8 @@ function toggleLoginModal()
         $(".modal").css("display", "none");
     }
 }
+*/
+
 
 //Bot Window pop up...
 function openBotWindow()
@@ -120,7 +123,7 @@ function snackbar(message , color = "green") {
 }
 /* Snackbar end */
 
-function loggedIn(user_data)
+function refreshPage()
 {   
     location.href = "/";
     location.reload();
@@ -138,14 +141,24 @@ function login()
             CloseModal();
             if(response['flag'] == 1)
             {
-                snackbar("Login Successfull !" , "green");
-                loggedIn();
+                refreshPage();
             }
             if(response['flag'] == 0)    
                 snackbar("Login Failed !" , "red");            
         },
         error: function () {
             snackbar("Login Failed !" , "red");
+        }
+    });
+}
+
+function logout()
+{
+    $.ajax({
+        type: "GET",
+        url: "/logout",
+        success: function (response) {
+            refreshPage();
         }
     });
 }
@@ -167,11 +180,6 @@ function signup()
             snackbar("Signup Failed !" , "red");
         }
     });
-}
-
-/*      Modal Close      */
-function CloseModal() {
-    $(".modal").css("display", "none");
 }
 
 /*      Youtube video Fetcher       */
@@ -260,18 +268,19 @@ tag.src = "https://www.youtube.com/player_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 */
+
 //Responsive navbar...
 
-$(".icon").click(function (e) {
-    if($(".top-nav").hasClass(".responsive"))
+$("#menu-drawer").click(function (e) {
+    if($("#topNav").hasClass("responsive"))
     {
-        $(".top-nav").removeClass(".responsive");
+        $(".top-nav").removeClass("responsive");
 
         console.log("response removed !");
     }
     else
     {
-        $(".top-nav").addClass(".responsive");
+        $("#topNav").addClass("responsive");
         console.log("response added !");
     }
 });
@@ -279,7 +288,7 @@ $(".icon").click(function (e) {
 
 //Login and SignUp Modals...
 //Signup Modal...
-
+/*
 $("#signUpButton").click(function (e) {
     $(".modal").css("display", "block");
     $("#SignUpModal").css("z-index", "8");
@@ -295,10 +304,23 @@ $("#loginButton").click(function (e) {
     $("#LoginModal").css("z-index", "8");
     e.preventDefault();
 });
+*/
 
-$(".close").click(function (e) {
-    CloseModal();
+$("#signUpButton").click(function (e) { 
+    $("#SignUpModal").show();    
     e.preventDefault();
+});
+
+$("#loginButton").click(function (e) { 
+    $("#LoginModal").show();    
+    e.preventDefault();
+});
+
+$(".signupclose").click(function () {
+    $("#SignUpModal").hide();
+});
+$(".loginclose").click(function () {
+    $("#LoginModal").hide();
 });
 
 });

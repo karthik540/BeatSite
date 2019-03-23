@@ -19,9 +19,7 @@ app.secret_key = os.urandom(24)
 
 @app.route('/')
 def index():
-    print("comes into index")
     if session.get('loggedIn'):
-        print("comes into index")
         data = {
             'flag' : 1,
             'username' : session['username'],
@@ -93,7 +91,7 @@ def logout():
     session['email'] = ''
     session['password'] = ''
     session['loggedIn'] = False
-    return redirect(url_for('index'))
+    return jsonify({'flag' : 1})
 
 @app.route('/browse/')
 @app.route('/browse/<int:page_no>')

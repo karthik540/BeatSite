@@ -1,4 +1,4 @@
-<nav class = "top-nav responsive">    
+<nav class = "top-nav" id = "topNav">    
     
     <a  class="logo">BeatSite</a>
    
@@ -7,7 +7,14 @@
     <a href = ""><i class="fa fa-fw fa-music"></i> My Playlist</a>
     <a href = "#bottom"><i class="fa fa-fw fa-user"></i> About Us</a>
     {% if data['flag'] == 1 %}
-        <a href = "" style="float:right;" id = "editButton" class = "editButton"><i class="fa fa-fw fa-user editButton"></i> {{ data['username'] }} </a>
+        <div class="dropdown" style="float:right;">
+            <div class="dropbtn"><i class="fa fa-fw fa-user editButton"></i>{{ data['username'] }}</div>
+            <div class="dropdown-content">
+            <a href="#"><i class="fa fa-fw fa-user"></i>Profile</a>
+            <a href="#" onclick="logout();"><i class="fa fa-fw fa-sign-out"></i>LogOut</a>
+            </div>
+        </div> 
+        <!--<a href = "" style="float:right;" id = "editButton" class = "editButton"><i class="fa fa-fw fa-user editButton"></i> {{ data['username'] }} </a>-->
     {% else %}
         <a href = "" style="float:right;" id = "loginButton"><i class="fa fa-fw fa-user"></i> Login</a>
         <a href = "" style="float:right;" id = "signUpButton"><i class="fa fa-fw fa-user"></i> SignUp</a>
@@ -17,7 +24,7 @@
     
 
     
-    <a href="#" class="icon">
+    <a href="#" class="icon" id = "menu-drawer" onclick="responsiveManage();">
         <i class="fa fa-bars"></i>
     </a>
 </nav>
@@ -28,7 +35,7 @@
 
     <!-- Modal content -->
     <form class="modal-content" id = "SignupForm">
-    <span class="close">&times;</span>
+    <span class="signupclose close">&times;</span>
     <div class="container">
         <h1>Sign Up</h1>
         <p>Please fill in this form to create an account.</p>
@@ -60,7 +67,7 @@
 
     <!-- Modal content -->
     <form class="modal-content" id = "LoginForm">
-    <span class="close">&times;</span>
+    <span class="loginclose close">&times;</span>
     <div class="container">
         <h1>Log In</h1>
         <p>Please fill in this form to Log into your account.</p>
