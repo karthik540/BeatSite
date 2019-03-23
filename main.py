@@ -1,9 +1,8 @@
-from flask import Flask , render_template , request , jsonify , sessions
+from flask import Flask , render_template , request , jsonify , session, redirect, url_for, escape
 from botAPI import *
-from samppy import *
 from image_url_fetcher import *
 import json , requests, pprint
-import pymysql
+import pymysql , os
 import urllib.request
 from urllib.parse import quote_plus
 import random
@@ -16,10 +15,24 @@ import urllib.request
 from urllib.parse import quote_plus
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 @app.route('/')
-def index(data = {'flag' : 0}):
-    return render_template('index.html' , data = data)
+def index():
+    print("comes into index")
+    if session.get('loggedIn'):
+        print("comes into index")
+        data = {
+            'flag' : 1,
+            'username' : session['username'],
+            'email' : session['email']
+        }
+        return render_template('index.html' , data = data)
+    else:
+        data = {
+            'flag' : 0
+        }
+        return render_template('index.html' , data = data)
 
 @app.route('/signup' , methods = ['POST'])
 def signup():
@@ -34,10 +47,16 @@ def signup():
     sql_query = "INSERT INTO userdetails (ID , Name , Password , Email)VALUES(%s , %s , %s , %s)"
     data = (temp , name , password , email)
     result = cursor.execute(sql_query , data)
-
+    return redirect(url_for('index'))
     if result == 1:
         print('Register Successful !')
-        return jsonify({'id' : temp , 'name' : name , 'email' : email , 'flag' : 1})
+        #Storing details in session variables.
+        session['email'] = email
+        session['username'] = name
+        session['password'] = password
+        session['loggedIn'] = True
+        return redirect(url_for('index'))
+        #return jsonify({'id' : temp , 'name' : name , 'email' : email , 'flag' : 1})
     else:
         print("Registration Unsuccessful !")
         return jsonify({'flag' : 0})
@@ -47,7 +66,7 @@ def signup():
 @app.route('/login' , methods = ['POST'])
 def login():
     email = request.form['email']
-    password = request.form['password']
+    password = request.form['password']   
 
     connection = pymysql.connect(host = 'localhost' , user = 'root' , password = '' , db = 'BeatSite')
 
@@ -59,9 +78,22 @@ def login():
     result = cursor.fetchone()
     
     if rows == 1:
-        return jsonify({'id' : result[0] , 'name' : result[1] , 'email' : result[3] , 'flag' : 1})
+        #Storing details in session variables.
+        session['email'] = result[3]
+        session['username'] = result[1]
+        session['password'] = password
+        session['loggedIn'] = True
+        return jsonify({'flag' : 1})
     else: 
         return jsonify({'flag' : 0})
+
+@app.route('/logout')
+def logout():
+    session['username'] = ''
+    session['email'] = ''
+    session['password'] = ''
+    session['loggedIn'] = False
+    return redirect(url_for('index'))
 
 @app.route('/browse/')
 @app.route('/browse/<int:page_no>')
@@ -82,8 +114,25 @@ def browse(page_no = 1):
             'image_url': url
         }
         album_list.append(single_album_list)
-    pprint.pprint(album_list)
-    return render_template('browse.html' , data = {'album_list' : album_list , 'page_no' : page_no})
+    #pprint.pprint(album_list)
+
+
+    if 'username' in session:
+        data = {
+            'flag' : 1,
+            'username' : session['username'],
+            'email' : session['email'],
+            'album_list' : album_list,
+            'page_no' : page_no
+        }
+        return render_template('browse.html' , data = data)
+    else:
+        data = {
+            'flag' : 0,
+            'album_list' : album_list,
+            'page_no' : page_no
+        }
+        return render_template('browse.html' , data = data)
 
 @app.route('/videoId/<songname>' , methods = ['POST'])
 def videoId(songname):
@@ -142,7 +191,24 @@ def album(album_id):
         }
         break
     #pprint.pprint(json_data['message']['body']['track_list'])
-    return render_template('album.html' , data = {'album_info': album_info , 'track_list' : track_list})
+
+
+    if 'username' in session:
+        data = {
+            'flag' : 1,
+            'username' : session['username'],
+            'email' : session['email'],
+            'album_info': album_info , 
+            'track_list' : track_list
+        }
+        return render_template('album.html' , data = data)
+    else:
+        data = {
+            'flag' : 0,
+            'album_info': album_info , 
+            'track_list' : track_list
+        }
+        return render_template('album.html' , data = data)
 
 @app.route('/botresponse' , methods = ['POST'])
 def botResponse():

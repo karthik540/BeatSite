@@ -122,11 +122,8 @@ function snackbar(message , color = "green") {
 
 function loggedIn(user_data)
 {   
-    $("#editButton").show();
-    $("#editButton").html("<i class='fa fa-fw fa-user editButton'></i>" + user_data['name']);
-    //$("#editButton").text( "<i class='fa fa-fw fa-user editButton'></i>" + user_data['name']);
-    $("#loginButton").hide();
-    $("#signUpButton").hide();
+    location.href = "/";
+    location.reload();
 }
 
 /*      Login function       */
@@ -137,14 +134,14 @@ function login()
         url: "/login",
         data: $("#LoginForm").serialize(),
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             CloseModal();
             if(response['flag'] == 1)
             {
                 snackbar("Login Successfull !" , "green");
-                loggedIn(response);
+                loggedIn();
             }
-            else    
+            if(response['flag'] == 0)    
                 snackbar("Login Failed !" , "red");            
         },
         error: function () {
