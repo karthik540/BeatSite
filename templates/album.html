@@ -47,6 +47,7 @@
                 <th>#</th>
                 <th>Track Name</th>
                 <th>Track Rating</th>
+                <th style="text-align: center;">Add to Favourites</th>
             </tr>
             
             {% for track in data['track_list'] %}
@@ -56,6 +57,7 @@
                     <td>
                         <div><span class="stars-container stars-100">★★★★★</span> ({{ track['track_rating'] }})</div>
                     </td>
+                    <td style="text-align: center;"><i class="fa fa-heart-o" onclick="addToFav('{{ track['track_id']}}');" style="font-size:20px;color:red;"></i></td>
                 </tr>
                 
             {% endfor %}

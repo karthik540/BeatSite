@@ -142,6 +142,30 @@ def videoId(songname):
     video_id = j_objs['items'][0]['id']['videoId']
     return video_id
 
+@app.route('/favourite/<songid>' , methods = ['GET'])
+def favourite(songid):
+    if not session.get('loggedIn'):
+        print("it works!")
+        return jsonify({'flag' : 0})
+    connection = pymysql.connect(host = 'localhost' , user = 'root' , password = '' , db = 'BeatSite' , autocommit = True)
+
+    cursor = connection.cursor()
+    sql_query = "SELECT songlist FROM userdetails WHERE Email = %s"
+    data = (session['email'])
+    result = cursor.execute(sql_query , data)
+    prev_songlist = cursor.fetchone()
+    print(prev_songlist)
+    songid = prev_songlist[0] + songid + "`"
+
+    sql_query = "UPDATE userdetails SET songlist = %s WHERE Email = %s"
+    data = (songid , session['email'])
+    result = cursor.execute(sql_query , data)
+
+    if result == 1:
+        return jsonify({'flag' : 1})
+    else:
+        return jsonify({'flag' : 0})
+
 @app.route('/album/<int:album_id>')
 def album(album_id):
     track_list = []

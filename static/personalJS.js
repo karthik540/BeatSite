@@ -138,7 +138,7 @@ function login()
         data: $("#LoginForm").serialize(),
         success: function (response) {
             //console.log(response);
-            CloseModal();
+            //CloseModal();
             if(response['flag'] == 1)
             {
                 refreshPage();
@@ -185,13 +185,13 @@ function signup()
 /*      Youtube video Fetcher       */
 
 function getVideoID(songname){
-    console.log(songname);
+    //console.log(songname);
 
     $.ajax({
         type: "POST",
         url: "/videoId/" + songname,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             $("#video_container").css("padding", "3% 25%");
             $("#video_container").html("<iframe id='player' width='100%' height='400px' src='https://www.youtube.com/embed/" + response + "?autoplay=1&enablejsapi=1&html5=1' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen=''></iframe>");
             onYouTubePlayerAPIReady();
@@ -250,6 +250,23 @@ function skipBackward() {
     pauseVideo();
     player.seekTo(player.getCurrentTime() - 10 , true);
     playVideo();
+}
+
+/*      Favourite adder function     */
+
+function addToFav(songid)
+{
+    console.log(songid);
+    $.ajax({
+        type: "GET",
+        url: "/favourite/" + songid,
+        success: function (response) {
+            if(response['flag'] == 1)
+                snackbar("Added to Favourites !" , "green");
+            else
+                snackbar("Failed to add to Favourites !" , "red");
+        }
+    });
 }
 
 
