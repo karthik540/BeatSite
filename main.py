@@ -142,8 +142,8 @@ def videoId(songname):
     video_id = j_objs['items'][0]['id']['videoId']
     return video_id
 
-@app.route('/favourite/<songid>' , methods = ['GET'])
-def favourite(songid):
+@app.route('/favourite_add/<songid>' , methods = ['GET'])
+def favourite_add(songid):
     if not session.get('loggedIn'):
         print("it works!")
         return jsonify({'flag' : 0})
@@ -153,18 +153,30 @@ def favourite(songid):
     sql_query = "SELECT songlist FROM userdetails WHERE Email = %s"
     data = (session['email'])
     result = cursor.execute(sql_query , data)
-    prev_songlist = cursor.fetchone()
-    print(prev_songlist)
-    songid = prev_songlist[0] + songid + "`"
+    prev_str = cursor.fetchone()
+
+    #check for duplicates...
+    prev_songlist = prev_str
+    prev_songlist = prev_songlist[0]
+    #splitting the trackids...
+    track_list = prev_songlist.split('`')
+    track_list.remove('')
+    for track in track_list:
+        if track == str(songid):
+            return jsonify({'flag' : 1})
+    
+    songid = prev_str[0] + songid + "`"
 
     sql_query = "UPDATE userdetails SET songlist = %s WHERE Email = %s"
     data = (songid , session['email'])
     result = cursor.execute(sql_query , data)
+    
 
     if result == 1:
         return jsonify({'flag' : 1})
     else:
         return jsonify({'flag' : 0})
+
 
 @app.route('/album/<int:album_id>')
 def album(album_id):
@@ -231,6 +243,48 @@ def album(album_id):
             'track_list' : track_list
         }
         return render_template('album.html' , data = data)
+
+@app.route('/favourite')
+def favourite():
+
+    if not session.get('loggedIn'):
+        return render_template('favourite.html' , data = {'flag' : 0})
+    connection = pymysql.connect(host = 'localhost' , user = 'root' , password = '' , db = 'BeatSite' , autocommit = True)
+
+    #fetching the trackids from the database...
+    cursor = connection.cursor()
+    sql_query = "SELECT songlist FROM userdetails WHERE Email = %s"
+    data = (session['email'])
+    result = cursor.execute(sql_query , data)
+    prev_songlist = cursor.fetchone()
+    prev_songlist = prev_songlist[0]
+    #splitting the trackids...
+    track_list = prev_songlist.split('`')
+    track_list.remove('')
+    
+    #print(track_list)
+    track_data = []
+    counter = 1
+    for trackid in track_list:
+        url_request = 'http://api.musixmatch.com/ws/1.1/track.get?track_id=' + str(trackid) + '&apikey=3d136bab70652b62413441c2a2880831'
+        r = requests.get(url_request)
+        json_data = json.loads(r.text)
+        pprint.pprint(json_data)
+        track = {
+            'index' : counter,
+            'track_name' : json_data['message']['body']['track']['track_name'],
+            'track_id' : json_data['message']['body']['track']['track_id'],
+            'track_rating' : json_data['message']['body']['track']['track_rating'],
+            'artist_name' : json_data['message']['body']['track']['artist_name']
+        }
+        counter = counter + 1
+        track_data.append(track)        
+
+    data = {
+        'flag' : 1,
+        'track_list' : track_data
+    }
+    return render_template('favourite.html' , data = data)
 
 @app.route('/botresponse' , methods = ['POST'])
 def botResponse():

@@ -138,7 +138,7 @@ display: block;
 }
 
 .img2{
-    background-image: url("Assets/img1.jpg");
+    background-image: url("Assets/favourite.jpg");
 }
 
 .imgtext{
@@ -155,7 +155,7 @@ display: block;
 /*  Text Formatting   */
 h1{
     letter-spacing: 2px;
-    font-size: 40px;
+	font-size: 40px;
 }
 .section{
 	text-align: center;

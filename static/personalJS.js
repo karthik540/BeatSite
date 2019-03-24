@@ -259,7 +259,7 @@ function addToFav(songid)
     console.log(songid);
     $.ajax({
         type: "GET",
-        url: "/favourite/" + songid,
+        url: "/favourite_add/" + songid,
         success: function (response) {
             if(response['flag'] == 1)
                 snackbar("Added to Favourites !" , "green");
