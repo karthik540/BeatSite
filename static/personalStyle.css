@@ -1,7 +1,7 @@
 body{
     width: 100%;
     margin: 0px;
-    padding: 0px;
+	padding: 0px;
 }
 a {
 	color: inherit;
@@ -127,6 +127,7 @@ display: block;
 /*  Image Positioning   */
 
 .img{
+	position: relative;
     min-height: 600px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -149,7 +150,7 @@ display: block;
 	color: #000000;
 	letter-spacing: 8px;
 	text-transform: uppercase;
-	font-size: 25px;
+	font-size: 20px;
 }
 
 /*  Text Formatting   */
@@ -440,7 +441,7 @@ outline: none;
 /* Set a style for all buttons */
 button {
 position: relative;
-left: 40%;
+/*left: 40%;*/
 border-radius: 20px;
 background-color: #e29839;
 color: white;
@@ -483,7 +484,11 @@ bottom: 23px;
 left: 80%;
 width: 280px;
 }
-
+@media (max-width: 880px) {
+	.open-button{
+		left:20%;
+	}
+}
 /* The popup chat - hidden by default */
 .chat-popup {
 display: none;
