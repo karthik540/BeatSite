@@ -48,7 +48,7 @@ function sendMessage()
             $(".chat-parent-container").append(botPart1 + response['response'] + botPart3);
             $(".chat-parent-container").animate({ scrollTop: 20000000 }, "slow");
             flag = true;
-            bot_Event_Handler(utext , response['class']);
+            bot_Event_Handler(response['response'] , response['class']);
         },
         error: function(){
             $(".chat-parent-container").append(botPart1 + "Sorry, Technical Issues !" + botPart3);
@@ -62,7 +62,7 @@ function sendMessage()
 
 /*      Bot Event handler function      */
 
-function bot_Event_Handler(user_request , intent_class) {
+function bot_Event_Handler(bot_response , intent_class) {
     
     if(intent_class == "Browse")
         window.location="http://127.0.0.1:5000/browse/";
@@ -90,6 +90,20 @@ function bot_Event_Handler(user_request , intent_class) {
         skipForward();
     if(intent_class == "go backward")
         skipBackward();   
+
+    if(intent_class == "play song")
+    {
+        $.ajax({
+            type: "POST",
+            url: "/videoId/" + bot_response,
+            success: function (response) {
+                $("#video_container").css("padding", "3% 25%");
+                $("#video_container").html("<iframe id='player' width='100%' height='400px' src='https://www.youtube.com/embed/" + response + "?autoplay=1&enablejsapi=1&html5=1' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen=''></iframe>");
+                onYouTubePlayerAPIReady();
+            }
+        });
+    }
+
     
 }
 
