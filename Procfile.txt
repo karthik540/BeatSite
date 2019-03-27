@@ -1,0 +1,1 @@
+web: gunicorn BeatSite.main --log-file -
